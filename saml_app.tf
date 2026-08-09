@@ -19,9 +19,6 @@ resource "okta_app_saml" "secure_app" {
   authn_context_class_ref = "urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport"
 
   authentication_policy = okta_app_signon_policy.secure_app_policy.id
-  lifecycle {
-    ignore_changes = [users, groups]
-  }
 }
 
 resource "okta_app_saml" "another_app" {
@@ -41,9 +38,6 @@ resource "okta_app_saml" "another_app" {
   authn_context_class_ref  = "urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport"
 
   authentication_policy = okta_app_signon_policy.secure_app_policy.id
-  lifecycle {
-    ignore_changes = [users, groups]
-  }
 }
 
 resource "okta_app_oauth" "yet_another_app" {
@@ -55,9 +49,6 @@ resource "okta_app_oauth" "yet_another_app" {
 
   # Same policy again — works across different app types too
   authentication_policy = okta_app_signon_policy.secure_app_policy.id
-  lifecycle {
-    ignore_changes = [users, groups]
-  }
 }
 
 resource "okta_app_signon_policy" "secure_app_policy" {
