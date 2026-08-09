@@ -35,8 +35,8 @@ resource "okta_app_saml" "another_app" {
   signature_algorithm      = "RSA_SHA256"
   digest_algorithm         = "SHA256"
   response_signed          = true
+  authn_context_class_ref  = "urn:oasis:names:tc:SAML:2.0:ac:classes:PasswordProtectedTransport"
 
-  # Same policy, reused
   authentication_policy = okta_app_signon_policy.secure_app_policy.id
 }
 
