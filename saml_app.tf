@@ -21,6 +21,36 @@ resource "okta_app_saml" "secure_app" {
   authentication_policy = okta_app_signon_policy.secure_app_policy.id
 }
 
+resource "okta_app_saml" "another_app" {
+  label  = "Another Secure App"
+  status = "ACTIVE"
+
+  sso_url     = "https://example2.com/saml/sso"
+  recipient   = "https://example2.com/saml/sso"
+  destination = "https://example2.com/saml/sso"
+  audience    = "https://example2.com/saml/metadata"
+
+  subject_name_id_template = "$${user.userName}"
+  subject_name_id_format   = "urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress"
+  signature_algorithm      = "RSA_SHA256"
+  digest_algorithm         = "SHA256"
+  response_signed          = true
+
+  # Same policy, reused
+  authentication_policy = okta_app_signon_policy.secure_app_policy.id
+}
+
+resource "okta_app_oauth" "yet_another_app" {
+  label          = "Yet Another App"
+  type           = "web"
+  grant_types    = ["authorization_code"]
+  redirect_uris  = ["https://example3.com/callback"]
+  response_types = ["code"]
+
+  # Same policy again — works across different app types too
+  authentication_policy = okta_app_signon_policy.secure_app_policy.id
+}
+
 resource "okta_app_signon_policy" "secure_app_policy" {
   name        = "Secure SAML App Sign-On Policy"
   description = "Requires a managed, registered macOS device meeting corporate assurance standards."
