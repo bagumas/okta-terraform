@@ -1,0 +1,12 @@
+# Local .terraform directories
+.terraform/
+
+# Distributed state files
+*.tfstate
+*.tfstate.backup
+
+# TF lock files and sensitive local vars
+.terraform.lock.hcl
+*.tfvars
+*.tfvars.json
+
