@@ -1,0 +1,41 @@
+name: "Okta Policy as Code"
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  terraform:
+    name: "Terraform Run"
+    runs-on: ubuntu-latest
+
+    env:
+      # Pass GitHub repository secrets into the execution shell context
+      OKTA_ORG_NAME: ${{ secrets.OKTA_ORG_NAME }}
+      OKTA_API_TOKEN: ${{ secrets.OKTA_API_TOKEN }}
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.7.0" # Match your local terraform version
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Format Check
+        run: terraform fmt -check
+
+      - name: Terraform Plan
+        run: terraform plan -input=false
+
+      # Only run Apply on a direct push to the main branch
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: terraform apply -auto-approve -input=false
+
