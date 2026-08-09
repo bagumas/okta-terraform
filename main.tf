@@ -35,9 +35,9 @@ resource "okta_policy_rule_signon" "require_mfa_rule" {
   priority  = 1
 
   # Actions triggered when a user logs into Okta
-  access          = "ALLOW"
-  mfa_required    = true
-  mfa_prompt      = "SESSION" # Prompts once per new browser session
+  access       = "ALLOW"
+  mfa_required = true
+  mfa_prompt   = "SESSION" # Prompts once per new browser session
   mfa_lifetime = 15
 }
 
