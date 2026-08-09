@@ -1,12 +1,12 @@
 # 1. Define the Okta Provider Configuration
-terraform {
-  required_providers {
-    okta = {
-      source  = "okta/okta"
-      version = "~> 4.0"
-    }
-  }
-}
+#terraform {
+#  required_providers {
+#    okta = {
+#      source  = "okta/okta"
+#      version = "~> 4.0"
+#    }
+#  }
+#}
 
 provider "okta" {
   base_url = "okta.com" # Leverages OKTA_ORG_NAME and OKTA_API_TOKEN environment variables
