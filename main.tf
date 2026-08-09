@@ -38,6 +38,6 @@ resource "okta_policy_rule_signon" "require_mfa_rule" {
   access          = "ALLOW"
   mfa_required    = true
   mfa_prompt      = "SESSION" # Prompts once per new browser session
-  factor_lifetime = 15
+  mfa_lifetime = 15
 }
 
