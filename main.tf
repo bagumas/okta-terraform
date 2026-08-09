@@ -8,9 +8,9 @@
 #  }
 #}
 
-provider "okta" {
-  base_url = "okta.com" # Leverages OKTA_ORG_NAME and OKTA_API_TOKEN environment variables
-}
+#provider "okta" {
+#  base_url = "okta.com" # Leverages OKTA_ORG_NAME and OKTA_API_TOKEN environment variables
+#}
 
 # 2. Reference the target group
 data "okta_group" "everyone" {
