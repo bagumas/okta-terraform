@@ -1,7 +1,6 @@
 package main
 
-# Guardrail: SAML apps must sign responses
-deny[msg] {
+deny contains msg if {
   resource := input.resource_changes[_]
   resource.type == "okta_app_saml"
   action := resource.change.actions[_]
@@ -13,10 +12,9 @@ deny[msg] {
   )
 }
 
-# Guardrail: group names must match approved list (non-blocking warning)
 approved_group_names := {"Engineering", "HR", "Security"}
 
-warn[msg] {
+warn contains msg if {
   resource := input.resource_changes[_]
   resource.type == "okta_group"
   action := resource.change.actions[_]

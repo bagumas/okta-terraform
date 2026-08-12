@@ -1,7 +1,6 @@
 package main
 
-# Guardrail: every okta_policy_rule_signon must require MFA
-deny[msg] {
+deny contains msg if {
   resource := input.resource_changes[_]
   resource.type == "okta_policy_rule_signon"
   action := resource.change.actions[_]
@@ -13,8 +12,7 @@ deny[msg] {
   )
 }
 
-# Guardrail: mfa_lifetime must be set and reasonable (cap at 480 min / 8hr)
-deny[msg] {
+deny contains msg if {
   resource := input.resource_changes[_]
   resource.type == "okta_policy_rule_signon"
   action := resource.change.actions[_]
@@ -27,7 +25,7 @@ deny[msg] {
   )
 }
 
-deny[msg] {
+deny contains msg if {
   resource := input.resource_changes[_]
   resource.type == "okta_policy_rule_signon"
   action := resource.change.actions[_]

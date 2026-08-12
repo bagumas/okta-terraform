@@ -2,8 +2,7 @@ package main
 
 app_resource_types := {"okta_app_saml", "okta_app_oauth", "okta_app_bookmark"}
 
-# Guardrail: every app must reference an explicit authentication_policy
-deny[msg] {
+deny contains msg if {
   resource := input.resource_changes[_]
   app_resource_types[resource.type]
   action := resource.change.actions[_]
@@ -16,8 +15,7 @@ deny[msg] {
   )
 }
 
-# Guardrail: device_is_managed requires device_is_registered too
-deny[msg] {
+deny contains msg if {
   resource := input.resource_changes[_]
   resource.type == "okta_app_signon_policy_rule"
   action := resource.change.actions[_]
@@ -30,8 +28,7 @@ deny[msg] {
   )
 }
 
-# Guardrail: managed-device rules must reference a device assurance policy
-deny[msg] {
+deny contains msg if {
   resource := input.resource_changes[_]
   resource.type == "okta_app_signon_policy_rule"
   action := resource.change.actions[_]
